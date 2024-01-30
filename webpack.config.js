@@ -16,7 +16,7 @@ module.exports = {
         rules: [
             { test: /\.css$/, use: ['style-loader', 'css-loader'] },
             { test: /\.js$/, use: 'babel-loader' },
-            { test: /\.svg$/, use: 'svg-inline-loader' },
+            { test: /\.svg$/, use: 'npm i svg-inline-loader -D ' },
         ],
     },
     plugins: [
