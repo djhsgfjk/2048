@@ -58,3 +58,14 @@ main {
     border: none;
 }
 
+.square {
+    background-color: rgb(194,244,244);
+    height: 100px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
