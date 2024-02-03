@@ -41,7 +41,7 @@ main {
     height: 100px;
     width: 100px;
     border-right: 10px solid;
-    background-color: rgb(251,228,228);
+    background-color: #E6A4B4;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -59,6 +59,10 @@ main {
 
 .cell:last-child {
     border: none;
+}
+
+[data-value="0"] {
+    background-color: rgb(251,228,228);
 }
 
 [data-value="2"] {
@@ -82,14 +86,10 @@ main {
 }
 
 [data-value="64"] {
-    background-color: #618264;
-}
-
-[data-value="128"] {
     background-color: #D2E0FB;
 }
 
-[data-value="256"] {
+[data-value="128"] {
     background-color: #8EACCD;
 }
 
@@ -97,11 +97,11 @@ main {
     background-color: #E0AED0;
 }
 
-[data-value="256"] {
+[data-value="512"] {
     background-color: #AC87C5;
 }
 
-[data-value="256"] {
+[data-value="1024"] {
     background-color: #756AB6;
 }
 
