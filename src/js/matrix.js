@@ -13,25 +13,33 @@ export default class Matrix {
         }
         
         this.matrixChanged = true;
+        this.newCells = [];
     }
 
     initializeMatrix() {
         let x, y;
-
+        
+        this.newCells = [];
         [x, y] = [Math.floor(Math.random() * this.rows), Math.floor(Math.random() * this.columns)];
         this.matrix[x][y] = 2;
+        this.newCells.push([x, y]);
         while(this.matrix[x][y] === 2) {
             [x, y] = [Math.floor(Math.random() * this.rows), Math.floor(Math.random() * this.columns)];
         }
         this.matrix[x][y] = 2;
+        this.newCells.push([x, y]);
 
         this.matrixChanged = true;
     }
 
     fillRandomZeroCell() {
-        if (this.zeroCells.length > 0) {
+        if (this.matrixChanged && this.zeroCells.length > 0) {
             const [x, y] = getRandomArrayElement(this.zeroCells);
             this.matrix[x][y] = 2;
+            this.newCells = [[x, y]];
+
+        } else {
+            this.newCells = [];
         }
 
         function getRandomArrayElement(arr) {
@@ -82,9 +90,9 @@ export default class Matrix {
             }
         }
 
-        if (this.matrixChanged) {
-            this.fillRandomZeroCell();
-        }
+        
+        this.fillRandomZeroCell();
+        
     }
 
     moveRight() {
@@ -123,9 +131,8 @@ export default class Matrix {
             }
         }
 
-        if (this.matrixChanged) {
-            this.fillRandomZeroCell();
-        }
+        
+        this.fillRandomZeroCell();
     }
 
     moveUp() {
@@ -164,9 +171,8 @@ export default class Matrix {
             }
         }
 
-        if (this.matrixChanged) {
-            this.fillRandomZeroCell();
-        }
+       
+        this.fillRandomZeroCell();
     }
 
     moveDown() {
@@ -205,8 +211,7 @@ export default class Matrix {
             }
         }
 
-        if (this.matrixChanged) {
-            this.fillRandomZeroCell();
-        }
+        
+        this.fillRandomZeroCell();
     }
 }

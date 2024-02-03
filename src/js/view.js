@@ -1,6 +1,6 @@
 export default class View {
     constructor({rows, columns}) {
-        let row, cell;
+        let row, cell, square;
         
 
         this.rows = rows;
@@ -19,25 +19,33 @@ export default class View {
                 cell = document.createElement('div')
                 cell.classList.add('row__cell', 'cell');
                 row.appendChild(cell);
-                
-                cell.innerHTML = 0;
-                cell.dataset.value = 0;
 
-                this.matrix[i][j] = cell;
+                square = document.createElement('div')
+                square.classList.add('cell__square', 'square');
+                cell.appendChild(square);
+                square.innerHTML = 0;
+                square.dataset.value = 0;
+
+                square.addEventListener("animationend", function(event) {
+                    event.target.classList.remove('emergence');
+                  });
+
+                this.matrix[i][j] = square;
             }
         }
         
     }
 
     reloadGrid(modelMatrix) {
-        let cell, value;
+        let square, value;
 
         for(let i = 0; i < this.rows; i++){
             for(let j = 0; j < this.columns; j++){
                 value = modelMatrix[i][j];
-                cell = this.matrix[i][j];
-                cell.innerHTML = value ? value : '';
-                cell.dataset.value = value;
+                square = this.matrix[i][j];
+                square.innerHTML = value ? value : '';
+                 
+                square.dataset.value = value;
             }
         }
     }
@@ -45,7 +53,6 @@ export default class View {
     bindMoveLeft(handler) {
         document.addEventListener('keydown', function(event) {
             if (event.code == 'ArrowLeft') {
-                console.log(this);
                 handler();
             }
           });
@@ -77,5 +84,11 @@ export default class View {
             }
           });
         
+    }
+
+    bindEmergenceAnimation(squares) {
+        squares.forEach(([i, j]) => {
+            this.matrix[i][j].classList.add('emergence');
+        });
     }
 }

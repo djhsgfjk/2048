@@ -41,12 +41,10 @@ main {
     height: 100px;
     width: 100px;
     border-right: 10px solid;
-    background-color: #E6A4B4;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bold;
-    font-size: 2rem;
+    background-color: #FBECF0;
 }
 
 .grid, .row, .cell {
@@ -61,8 +59,39 @@ main {
     border: none;
 }
 
+@keyframes emergence {
+    from {
+        width: 0px;
+        height: 0px;
+        font-size: 0rem;
+    }
+
+    to {
+        height: 100px;
+        width: 100px;
+        font-size: 2rem;
+    }
+}
+
+.emergence {
+    animation-duration: 0.5s;
+    animation-name: emergence;
+}
+
+.square {
+    height: 100px;
+    width: 100px;
+    background-color: #E6A4B4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 2rem;
+    border-radius: 6px;
+}
+
 [data-value="0"] {
-    background-color: rgb(251,228,228);
+    background-color: #FBECF0;
 }
 
 [data-value="2"] {
@@ -70,7 +99,7 @@ main {
 }
 
 [data-value="4"] {
-    background-color: #F3D7CA;
+    background-color: #F6D9D6;
 }
 
 [data-value="8"] {
@@ -82,26 +111,29 @@ main {
 }
 
 [data-value="32"] {
-    background-color: #89B9AD;
+    background-color: #C3DDD7;
 }
 
 [data-value="64"] {
-    background-color: #D2E0FB;
+    background-color: #EAF4FA; 
 }
 
 [data-value="128"] {
-    background-color: #8EACCD;
+    background-color: #CEE3EF;
 }
 
 [data-value="256"] {
-    background-color: #E0AED0;
+    background-color: #F4C3D0;
 }
 
 [data-value="512"] {
-    background-color: #AC87C5;
+    background-color: #CBC6D9;
 }
 
 [data-value="1024"] {
-    background-color: #756AB6;
+    background-color: #AAD7D9;
 }
 
+[data-value="2048"] {
+    background-color: #E0D7FF;
+}
