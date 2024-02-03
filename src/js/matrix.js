@@ -1,11 +1,8 @@
-// export default 
-'use strict';
-class Matrix {
+export default class Matrix {
     constructor({rows, columns}){
-        let x, y;
-
         this.rows = rows;
         this.columns = columns;
+        this.zeroCells = [];
         this.matrix = new Array(rows);
         
         for(let i = 0; i < rows; i++){
@@ -14,21 +11,28 @@ class Matrix {
                 this.matrix[i][j] = 0;
             }
         }
-        [x, y] = [Math.floor(Math.random() * rows), Math.floor(Math.random() * columns)];
-        this.matrix[x][y] = 2;
-        while(this.matrix[x][y] === 2) {
-            [x, y] = [Math.floor(Math.random() * rows), Math.floor(Math.random() * columns)];
-    
-        }
-        this.matrix[x][y] = 2;
-        // this.matrix[1][3] = 2;
-        // this.matrix[3][0] = 2;
-
+        
+        this.matrixChanged = true;
     }
 
-    #fillRandomZeroCell() {
-        const [x, y] = getRandomArrayElement(this.zeroCells);
+    initializeMatrix() {
+        let x, y;
+
+        [x, y] = [Math.floor(Math.random() * this.rows), Math.floor(Math.random() * this.columns)];
         this.matrix[x][y] = 2;
+        while(this.matrix[x][y] === 2) {
+            [x, y] = [Math.floor(Math.random() * this.rows), Math.floor(Math.random() * this.columns)];
+        }
+        this.matrix[x][y] = 2;
+
+        this.matrixChanged = true;
+    }
+
+    fillRandomZeroCell() {
+        if (this.zeroCells.length > 0) {
+            const [x, y] = getRandomArrayElement(this.zeroCells);
+            this.matrix[x][y] = 2;
+        }
 
         function getRandomArrayElement(arr) {
             return arr[Math.floor(Math.random() * arr.length)];
@@ -43,136 +47,166 @@ class Matrix {
     }
 
     moveLeft() {
-        let x, y, value, sum;
+        let count, value, sum;
         this.zeroCells = [];
+        this.matrixChanged = false;
         for(let i = 0; i < this.rows; i++){
-            [x, y] = [i, 0];
-            value = this.matrix[i][0];
+            count = 0; //j
+            value = this.matrix[i][count];
             sum = value;
             for(let j = 1; j < this.columns; j++){
                 if (value === 0) {
                     value = this.matrix[i][j];
-                }
-                if (this.matrix[i][j] === value || this.matrix[i][j] === 0) {
-                    sum += this.matrix[i][j];
-                    this.matrix[i][j] = 0;
-                    this.zeroCells.push([i, j]);
-                } else {
-                    this.matrix[x][y] = sum;
-                    
-                    [x, y] = [x, y+1];
-                    value  = this.matrix[i][j];
                     sum = value;
+                    continue;
+                }
+                if (sum < value * 2 && (this.matrix[i][j] === value || this.matrix[i][j] === 0)) {
+                    sum += this.matrix[i][j];
+                } else {
+                    if (this.matrix[i][count] !== sum) 
+                        this.matrixChanged = true;
+                    this.matrix[i][count] = sum;
+                    value = this.matrix[i][j];
+                    sum = value;
+                    count++;
                 }
             }
-            this.matrix[x][y] = sum;
+            if (this.matrix[i][count] !== sum) 
+                        this.matrixChanged = true;
+            this.matrix[i][count] = sum;
+            for (let j = count + 1; j < this.columns; j++) {
+                if (this.matrix[i][j] !== 0) 
+                        this.matrixChanged = true;
+                this.matrix[i][j] = 0;
+                this.zeroCells.push([i, j]);
+            }
         }
 
-        this.#fillRandomZeroCell();
+        if (this.matrixChanged) {
+            this.fillRandomZeroCell();
+        }
     }
 
     moveRight() {
-        let x, y, value, sum;
+        let count, value, sum;
         this.zeroCells = [];
+        this.matrixChanged = false;
         for(let i = 0; i < this.rows; i++){
-            [x, y] = [i, this.columns - 1];
-            value = this.matrix[i][this.columns - 1];
+            count = this.columns - 1; //j
+            value = this.matrix[i][count];
             sum = value;
-            for(let j = this.columns - 2; j > 0; j--){
+            for(let j = this.columns - 2; j >= 0; j--){
                 if (value === 0) {
                     value = this.matrix[i][j];
-                }
-                if (this.matrix[i][j] === value || this.matrix[i][j] === 0) {
-                    sum += this.matrix[i][j];
-                    this.matrix[i][j] = 0;
-                    this.zeroCells.push([i, j]);
-                } else {
-                    this.matrix[x][y] = sum;
-                    
-                    [x, y] = [x, y-1];
-                    value  = this.matrix[i][j];
                     sum = value;
+                    continue;
+                }
+                if (sum < value * 2 && (this.matrix[i][j] === value || this.matrix[i][j] === 0)) {
+                    sum += this.matrix[i][j];
+                } else {
+                    if (this.matrix[i][count] !== sum) 
+                        this.matrixChanged = true;
+                    this.matrix[i][count] = sum;
+                    value = this.matrix[i][j];
+                    sum = value;
+                    count--;
                 }
             }
-            this.matrix[x][y] = sum;
+            if (this.matrix[i][count] !== sum) 
+                        this.matrixChanged = true;
+            this.matrix[i][count] = sum;
+            for (let j = count - 1; j >= 0; j--) {
+                if (this.matrix[i][j] !== 0) 
+                        this.matrixChanged = true;
+                this.matrix[i][j] = 0;
+                this.zeroCells.push([i, j]);
+            }
         }
 
-        this.#fillRandomZeroCell();
+        if (this.matrixChanged) {
+            this.fillRandomZeroCell();
+        }
     }
 
     moveUp() {
-        let x, y, value, sum;
+        let count, value, sum;
         this.zeroCells = [];
+        this.matrixChanged = false;
         for(let j = 0; j < this.columns; j++){
-            [x, y] = [0, j];
-            value = this.matrix[0][j];
+            count = 0; //i
+            value = this.matrix[count][j];
             sum = value;
             for(let i = 1; i < this.rows; i++){
                 if (value === 0) {
                     value = this.matrix[i][j];
-                }
-                if (this.matrix[i][j] === value || this.matrix[i][j] === 0) {
-                    sum += this.matrix[i][j];
-                    this.matrix[i][j] = 0;
-                    this.zeroCells.push([i, j]);
-                } else {
-                    this.matrix[x][y] = sum;
-                    
-                    [x, y] = [x+1, y];
-                    value  = this.matrix[i][j];
                     sum = value;
+                    continue;
+                }
+                if (sum < value * 2 && (this.matrix[i][j] === value || this.matrix[i][j] === 0)) {
+                    sum += this.matrix[i][j];
+                } else {
+                    if (this.matrix[count][j] !== sum) 
+                        this.matrixChanged = true;
+                    this.matrix[count][j] = sum;
+                    value = this.matrix[i][j];
+                    sum = value;
+                    count++;
                 }
             }
-            this.matrix[x][y] = sum;
+            if (this.matrix[count][j] !== sum) 
+                        this.matrixChanged = true;
+            this.matrix[count][j] = sum;
+            for (let i = count + 1; i < this.rows; i++) {
+                if (this.matrix[i][j] !== 0) 
+                        this.matrixChanged = true;
+                this.matrix[i][j] = 0;
+                this.zeroCells.push([i, j]);
+            }
         }
 
-        this.#fillRandomZeroCell();
+        if (this.matrixChanged) {
+            this.fillRandomZeroCell();
+        }
     }
 
     moveDown() {
-        let x, y, value, sum;
+        let count, value, sum;
         this.zeroCells = [];
+        this.matrixChanged = false;
         for(let j = 0; j < this.columns; j++){
-            [x, y] = [this.rows - 1, j];
-            value = this.matrix[this.rows - 1][j];
+            count = this.rows - 1; //i
+            value = this.matrix[count][j];
             sum = value;
-            for(let i = this.rows - 2; i > 0; i--){
+            for(let i = this.rows - 2; i >= 0; i--){
                 if (value === 0) {
                     value = this.matrix[i][j];
-                }
-                if (this.matrix[i][j] === value || this.matrix[i][j] === 0) {
-                    sum += this.matrix[i][j];
-                    this.matrix[i][j] = 0;
-                    this.zeroCells.push([i, j]);
-                } else {
-                    this.matrix[x][y] = sum;
-                    
-                    [x, y] = [x-1, y];
-                    value  = this.matrix[i][j];
                     sum = value;
+                    continue;
+                }
+                if (sum < value * 2 && (this.matrix[i][j] === value || this.matrix[i][j] === 0)) {
+                    sum += this.matrix[i][j];
+                } else {
+                    if (this.matrix[count][j] !== sum) 
+                        this.matrixChanged = true;
+                    this.matrix[count][j] = sum;
+                    value = this.matrix[i][j];
+                    sum = value;
+                    count--;
                 }
             }
-            this.matrix[x][y] = sum;
+            if (this.matrix[count][j] !== sum) 
+                        this.matrixChanged = true;
+            this.matrix[count][j] = sum;
+            for (let i = count - 1; i >= 0; i--) {
+                if (this.matrix[i][j] !== 0) 
+                        this.matrixChanged = true;
+                this.matrix[i][j] = 0;
+                this.zeroCells.push([i, j]);
+            }
         }
 
-        this.#fillRandomZeroCell();
+        if (this.matrixChanged) {
+            this.fillRandomZeroCell();
+        }
     }
 }
-
-// const matrix = new Matrix({
-//     rows: 4,
-//     columns: 4,
-// });
-// matrix.printMatrix();
-// matrix.moveDown();
-// matrix.printMatrix();
-// matrix.moveDown();
-// matrix.printMatrix();
-// matrix.moveDown();
-// matrix.printMatrix();
-// matrix.moveDown();
-// matrix.printMatrix();
-// matrix.moveDown();
-// matrix.printMatrix();
-// matrix.moveDown();
-// matrix.printMatrix();

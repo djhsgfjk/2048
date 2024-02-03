@@ -61,7 +61,47 @@ main {
     border: none;
 }
 
-.row__cell--2 {
-    background-color: rgb(244,228,195);
+[data-value="2"] {
+    background-color: #FFF8E3;
+}
+
+[data-value="4"] {
+    background-color: #F3D7CA;
+}
+
+[data-value="8"] {
+    background-color: #F9F3CC;
+}
+
+[data-value="16"] {
+    background-color: #D7E5CA;
+}
+
+[data-value="32"] {
+    background-color: #89B9AD;
+}
+
+[data-value="64"] {
+    background-color: #618264;
+}
+
+[data-value="128"] {
+    background-color: #D2E0FB;
+}
+
+[data-value="256"] {
+    background-color: #8EACCD;
+}
+
+[data-value="256"] {
+    background-color: #E0AED0;
+}
+
+[data-value="256"] {
+    background-color: #AC87C5;
+}
+
+[data-value="256"] {
+    background-color: #756AB6;
 }
 
