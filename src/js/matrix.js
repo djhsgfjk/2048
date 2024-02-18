@@ -3,8 +3,10 @@ export default class Matrix {
         this.rows = rows;
         this.columns = columns;
         this.zeroCells = [];
+        this.matrixChanged = true;
+        this.newCells = [];
+
         this.matrix = new Array(rows);
-        
         for(let i = 0; i < rows; i++){
             this.matrix[i] = new Array(columns);
             for(let j = 0; j < columns; j++){
@@ -12,8 +14,7 @@ export default class Matrix {
             }
         }
         
-        this.matrixChanged = true;
-        this.newCells = [];
+        
     }
 
     initializeMatrix() {

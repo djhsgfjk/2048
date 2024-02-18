@@ -27,8 +27,8 @@ export default class View {
                 square.dataset.value = 0;
 
                 square.addEventListener("animationend", function(event) {
-                    event.target.classList.remove('emergence');
-                  });
+                    event.target.classList.remove('emergence', 'slide-left', 'slide-right', 'slide-up', 'slide-down');
+                });
 
                 this.matrix[i][j] = square;
             }
@@ -36,7 +36,7 @@ export default class View {
         
     }
 
-    reloadGrid(modelMatrix) {
+    reloadGrid(modelMatrix, direction) {
         let square, value;
 
         for(let i = 0; i < this.rows; i++){
@@ -44,8 +44,23 @@ export default class View {
                 value = modelMatrix[i][j];
                 square = this.matrix[i][j];
                 square.innerHTML = value ? value : '';
-                 
+                console.log(square.dataset.value, value);
+                if (value && square.dataset.value != value) {
+                    switch(direction) {
+                        case 1:
+                            square.classList.add('slide-left');
+                            break;
+                        case 2:
+                            square.classList.add('slide-right');
+                            break;
+                        case 3:
+                            square.classList.add('slide-up');
+                        case 4:
+                            square.classList.add('slide-down');
+                    }
+                }
                 square.dataset.value = value;
+                
             }
         }
     }
@@ -88,6 +103,7 @@ export default class View {
 
     bindEmergenceAnimation(squares) {
         squares.forEach(([i, j]) => {
+            this.matrix[i][j].classList.remove('slide-left', 'slide-right', 'slide-up', 'slide-down');
             this.matrix[i][j].classList.add('emergence');
         });
     }
