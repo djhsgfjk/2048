@@ -78,75 +78,12 @@ main {
     animation-name: emergence;
 }
 
-@keyframes slideDown {
-    from {
-        position: relative;
-        top: -40px;
-    }
-
-    to {
-        position: relative;
-        top: 0;
-    }
-}
-
-.slide-down {
-    animation-duration: 0.5s;
-    animation-name: slideDown;
-}
-
-@keyframes slideUp {
-    from {
-        position: relative;
-        bottom: -40px;
-    }
-
-    to {
-        position: relative;
-        bottom: 0;
-    }
-}
-
-.slide-up {
-    animation-duration: 0.5s;
-    animation-name: slideUp;
-}
-
-@keyframes slideLeft {
-    from {
-        position: relative;
-        right: -40px;
-    }
-
-    to {
-        position: relative;
-        right: 0;
-    }
-}
-
-.slide-left {
-    animation-duration: 0.5s;
-    animation-name: slideLeft;
-}
-
-@keyframes slideRight {
-    from {
-        position: relative;
-        left: -40px;
-    }
-
-    to {
-        position: relative;
-        left: 0;
-    }
-}
-
 .slide-right {
     animation-duration: 0.5s;
     animation-name: slideRight;
 }
 
-.square {
+.cell__square {
     height: 100px;
     width: 100px;
     background-color: #E6A4B4;
@@ -156,6 +93,10 @@ main {
     font-weight: bold;
     font-size: 2rem;
     border-radius: 6px;
+}
+
+[data-row="1"][data-cell="1"] {
+    transform: translate(121px, 121px);
 }
 
 [data-value="0"] {

@@ -4,17 +4,10 @@ import Controller from './controller';
 import View from './view';
 import Matrix from './matrix';
 
-console.log('start');
-
 new Controller({
-    model: new Matrix({
+    model: new Model({
             rows: 4,
             columns: 4,
         }),
-    view: new View({
-        rows: 4,
-        columns: 4,
-    }),
+    view: new View(),
 });
-
-console.log('start2');
