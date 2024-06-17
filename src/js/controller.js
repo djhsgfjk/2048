@@ -3,32 +3,18 @@ export default class Controller {
         this.model = model;
         this.view = view;
         
-        
-        this.model.initializeMatrix();
-        this.view.reloadGrid(this.model.matrix);
-        // this.view.bindEmergenceAnimation(this.model.newCells);
-        
-        // this.view.bindMoveLeft(() => {
-        //     this.model.moveLeft();
-        //     this.view.reloadGrid(this.model.matrix, 1);
-        //     this.view.bindEmergenceAnimation(this.model.newCells);
-        // });
+        // let [x, y] = this.model.getAnyEmptyPosition();
+        // this.model.addSquare(x, y, 2);
+        // this.view.createSquare(x, y, 2);
 
-        // this.view.bindMoveRight(() => {
-        //     this.model.moveRight();
-        //     this.view.reloadGrid(this.model.matrix, 2);
-        //     this.view.bindEmergenceAnimation(this.model.newCells);
-        // });
+        // [x, y] = this.model.getAnyEmptyPosition();
+        // this.model.addSquare(x, y, 2);
+        // this.view.createSquare(x, y, 2);
 
-        // this.view.bindMoveUp(() => {
-        //     this.model.moveUp();
-        //     this.view.reloadGrid(this.model.matrix, 3);
-        //     this.view.bindEmergenceAnimation(this.model.newCells);
-        // });
-        // this.view.bindMoveDown(() => {
-        //     this.model.moveDown();
-        //     this.view.reloadGrid(this.model.matrix, 4);
-        //     this.view.bindEmergenceAnimation(this.model.newCells);
-        // });
+        this.model.addSquare(0, 0, 2);
+        this.view.createSquare(0, 0, 2);
+
+        this.model.addSquare(1, 2, 2);
+        this.view.createSquare(1, 2, 2);
     }
 }

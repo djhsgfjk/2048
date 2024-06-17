@@ -1,9 +1,8 @@
 
 main {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: fit-content;
+    margin: 0 auto;
+    margin-top: 30px;
     padding: 10px;
     color: rgb(219,138,138);
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -16,48 +15,73 @@ main {
     height: fit-content;
 }
 
+.game__header {
+    margin: 10px;
+}
+
 .header {
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__title {
+    font-size: 4em;
+    font-weight: bold;
+}
+
+.score {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.game-main {
+    margin-top: 20px;
+    position: relative;
 }
 
 .grid {
     display: flex;
     flex-direction: column;
     width: fit-content;
-    border: 10px solid;
-    border-radius: 6px;
-    /* background-color: peru; */
+}
+
+.squares-container {
+    position: absolute;
+    z-index: 1;
+}
+
+.cell__square {
+    position: absolute;
 }
 
 .row {
     display: flex;
     flex-direction: row;
     width: fit-content;
-    border-bottom: 10px solid;
-    /* background-color: peru; */
+    height: 110px;
 }
 
 .cell {
     height: 100px;
     width: 100px;
-    border-right: 10px solid;
+    border: 10px solid;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #FBECF0;
+    margin: -5px;
 }
 
 .grid, .row, .cell {
     border-color: rgb(244,194,194);
 }
 
-.row:last-child {
-    border: none;
-}
-
-.cell:last-child {
-    border: none;
-}
 
 @keyframes emergence {
     from {
@@ -93,6 +117,14 @@ main {
     font-weight: bold;
     font-size: 2rem;
     border-radius: 6px;
+}
+
+[data-row="0"][data-cell="0"] {
+    transform: translate(5px, -435px);
+}
+
+[data-row="1"][data-cell="2"] {
+    transform: translate(115px, -325px);
 }
 
 [data-row="1"][data-cell="1"] {

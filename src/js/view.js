@@ -1,6 +1,20 @@
 export default class View {
-    constructor() {
+    constructor({rows, columns}) {
         this.grid = document.querySelector('.grid');
+
+        for(let i = 0, row, cell; i < rows; i++){
+            row = document.createElement('div');
+            row.classList.add('grid__row', 'row');
+            this.grid.appendChild(row);
+            
+            for(let j = 0; j < columns; j++){
+                cell = document.createElement('div');
+                cell.classList.add('row__cell', 'cell');
+                row.appendChild(cell);
+            }
+        }
+        
+        this.squaresContainer = document.querySelector('.squares-container');
     }
 
     createSquare(row, cell, value) {
@@ -14,7 +28,7 @@ export default class View {
         square.dataset.value = value;
         square.dataset.merged = false;
 
-        grid.appendChild(square);
+        this.squaresContainer.appendChild(square);
     }
 
     deleteMergedSquares(row, cell) {
@@ -22,76 +36,4 @@ export default class View {
 
         squares.remove();
     }
-
-    // reloadGrid(modelMatrix, direction) {
-    //     let square, value;
-
-    //     for(let i = 0; i < this.rows; i++){
-    //         for(let j = 0; j < this.columns; j++){
-    //             value = modelMatrix[i][j];
-    //             square = this.matrix[i][j];
-    //             square.innerHTML = value ? value : '';
-    //             console.log(square.dataset.value, value);
-    //             if (value && square.dataset.value != value) {
-    //                 switch(direction) {
-    //                     case 1:
-    //                         square.classList.add('slide-left');
-    //                         break;
-    //                     case 2:
-    //                         square.classList.add('slide-right');
-    //                         break;
-    //                     case 3:
-    //                         square.classList.add('slide-up');
-    //                     case 4:
-    //                         square.classList.add('slide-down');
-    //                 }
-    //             }
-    //             square.dataset.value = value;
-                
-    //         }
-    //     }
-    // }
-
-    // bindMoveLeft(handler) {
-    //     document.addEventListener('keydown', function(event) {
-    //         if (event.code == 'ArrowLeft') {
-    //             handler();
-    //         }
-    //       });
-
-    // }
-
-    // bindMoveRight(handler) {
-    //     document.addEventListener('keydown', function(event) {
-    //         if (event.code == 'ArrowRight') {
-    //             handler();
-    //         }
-    //       });
-        
-    // }
-
-    // bindMoveUp(handler) {
-    //     document.addEventListener('keydown', function(event) {
-    //         if (event.code == 'ArrowUp') {
-    //             handler();
-    //         }
-    //       });
-        
-    // }
-
-    // bindMoveDown(handler) {
-    //     document.addEventListener('keydown', function(event) {
-    //         if (event.code == 'ArrowDown') {
-    //             handler();
-    //         }
-    //       });
-        
-    // }
-
-    // bindEmergenceAnimation(squares) {
-    //     squares.forEach(([i, j]) => {
-    //         this.matrix[i][j].classList.remove('slide-left', 'slide-right', 'slide-up', 'slide-down');
-    //         this.matrix[i][j].classList.add('emergence');
-    //     });
-    // }
 }

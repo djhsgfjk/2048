@@ -3,39 +3,56 @@ export default class Model {
         this.rows = rows;
         this.columns = columns;
         this.score = 0;
-
+        
         this.squares = new Array(rows);
     }
 
+    getAnyEmptyPosition() {
+        let x, y;
+        [x, y] = [Math.floor(Math.random() * this.rows), Math.floor(Math.random() * this.columns)];
+        while(this.squares.some((s) => (s.row === x && s.cell === y))) {
+            [x, y] = [Math.floor(Math.random() * this.rows), Math.floor(Math.random() * this.columns)];
+        }
+        return [x, y];
+    }
+
     addSquare(x, y, value) {
-        this.squares.append({
-            'row': x,
-            'cell': y,
-            'value': value,
-            'merged': false
-        });
+        const newSquare = new Square(x, y, value);
+        this.squares.push(newSquare);
+        // return newSquare;
     }
 
     removeMergedSquares(x, y) {
-        this.squares.filter(({row, cell, merged}) => {
-            return !merged;
+        this.squares.filter((s) => {
+            return !s.merged;
         });
     }
 
-    initializeMatrix() {
-        let x, y;
-        
-        [x, y] = [Math.floor(Math.random() * this.rows), Math.floor(Math.random() * this.columns)];
-        this.matrix[x][y] = 2;
-        while(this.matrix[x][y] === 2) {
-            [x, y] = [Math.floor(Math.random() * this.rows), Math.floor(Math.random() * this.columns)];
-        }
-        this.matrix[x][y] = 2;
+    // sumLeft() {
+    //     for (let i = 0; i < this.rows; i++) {
+            
+    //     }
+    // }
+}
+
+class Square{
+    constructor({row, cell, value}) {
+        this.row0 = null;
+        this.cell0 = null;
+        this.row = row;
+        this.cell = cell;
+        this.value = value;
+        this.merged = false;
     }
 
-    sumLeft() {
-        for (let i = 0; i < this.rows; i++) {
-            matrx[i][]
-        }
+    editPosition(row, cell) {
+        this.row0 = this.row;
+        this.cell0 = this.cell;
+        this.row = row;
+        this.cell = cell;
+    }
+
+    isMerged() {
+        this.merged = true;
     }
 }
