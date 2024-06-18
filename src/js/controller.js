@@ -10,11 +10,20 @@ export default class Controller {
         [x, y] = this.model.getAnyEmptyPosition();
         this.model.addSquare(x, y, 2);
         this.view.createSquare(x, y, 2);
+        
+        this.view.bindMoveLeft(() => {
+            this.model.sumLeft();
+        });
 
-        // this.model.addSquare(0, 0, 2);
-        // this.view.createSquare(0, 0, 2);
+        this.view.bindMoveRight(() => {
+            this.model.sumRight();
+        });
 
-        // this.model.addSquare(1, 2, 2);
-        // this.view.createSquare(1, 2, 2);
+        this.view.bindMoveUp(() => {
+            this.model.sumUp();
+        });
+        this.view.bindMoveDown(() => {
+            this.model.sumDown();
+        });
     }
 }

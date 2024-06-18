@@ -1,8 +1,10 @@
 export default class View {
     constructor({rows, columns}) {
         this.grid = document.querySelector('.grid');
-
-        for(let i = 0, row, cell, innerCell; i < rows; i++){
+        this.squaresContainer = document.querySelector('.squares-container');
+        const sheet  = document.querySelector("style").sheet;
+        
+        for(let i = 0, row, cell, innerCell, rule; i < rows; i++){
             row = document.createElement('div');
             row.classList.add('grid__row', 'row');
             this.grid.appendChild(row);
@@ -16,10 +18,13 @@ export default class View {
                 innerCell.classList.add('cell__inner');
                 cell.appendChild(innerCell);
 
+                rule = `[data-row="${i}"][data-cell="${j}"] { transform: translate(${j * 110 + 10}px, ${i * 110 - 430}px); }`;
+                sheet.insertRule(rule, sheet.cssRules.length);
+
             }
         }
         
-        this.squaresContainer = document.querySelector('.squares-container');
+        
     }
 
     createSquare(row, cell, value) {
@@ -33,18 +38,56 @@ export default class View {
         square.dataset.value = value;
         square.dataset.merged = false;
 
-        square.style.transform = this._getPositionStyle(row, cell);
-
         this.squaresContainer.appendChild(square);
     }
 
+    moveSquaresLeft() {
+        document.querySelectorAll('.cell__square').forEach((s) => (s.dataset.cell = 0));
+    }
+
     deleteMergedSquares(row, cell) {
-        let squares = document.querySelectorAll(`div.cell__square[data-row=${row}][data-cell=${cell}][data-merged=${true}]`);
+        let squares = document.querySelectorAll(`div.cell__square[data-merged=${true}]`);
 
         squares.remove();
     }
 
-    _getPositionStyle(row, cell) {
-        return `translate(${row * 110 + 10}px, ${cell * 110 - 430}px)`;
+    bindMoveLeft(handler) {
+        document.addEventListener('keydown', function(event) {
+            if (event.code == 'ArrowLeft') {
+                handler();
+                document.querySelectorAll('.cell__square').forEach((s) => {
+                    console.log(s); 
+                    s.dataset.cell = 0;
+                });
+            }
+          });
+
+    }
+
+    bindMoveRight(handler) {
+        document.addEventListener('keydown', function(event) {
+            if (event.code == 'ArrowRight') {
+                handler();
+            }
+          });
+        
+    }
+
+    bindMoveUp(handler) {
+        document.addEventListener('keydown', function(event) {
+            if (event.code == 'ArrowUp') {
+                handler();
+            }
+          });
+        
+    }
+
+    bindMoveDown(handler) {
+        document.addEventListener('keydown', function(event) {
+            if (event.code == 'ArrowDown') {
+                handler();
+            }
+          });
+        
     }
 }

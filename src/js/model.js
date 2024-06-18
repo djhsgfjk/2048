@@ -19,7 +19,6 @@ export default class Model {
     addSquare(x, y, value) {
         const newSquare = new Square(x, y, value);
         this.squares.push(newSquare);
-        // return newSquare;
     }
 
     removeMergedSquares(x, y) {
@@ -28,11 +27,17 @@ export default class Model {
         });
     }
 
-    // sumLeft() {
-    //     for (let i = 0; i < this.rows; i++) {
-            
-    //     }
-    // }
+    sumLeft() {
+    }
+
+    sumRight() {
+    }
+
+    sumUp() {
+    }
+
+    sumDown() {
+    }
 }
 
 class Square{
