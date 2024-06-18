@@ -33,6 +33,8 @@ export default class View {
         square.dataset.value = value;
         square.dataset.merged = false;
 
+        square.style.transform = this._getPositionStyle(row, cell);
+
         this.squaresContainer.appendChild(square);
     }
 
@@ -40,5 +42,9 @@ export default class View {
         let squares = document.querySelectorAll(`div.cell__square[data-row=${row}][data-cell=${cell}][data-merged=${true}]`);
 
         squares.remove();
+    }
+
+    _getPositionStyle(row, cell) {
+        return `translate(${row * 110 + 10}px, ${cell * 110 - 430}px)`;
     }
 }

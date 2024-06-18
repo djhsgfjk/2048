@@ -28,7 +28,7 @@ main {
 }
 
 .header__title {
-    font-size: 4em;
+    font-size: 4.5em;
     font-weight: bold;
 }
 
@@ -41,7 +41,7 @@ main {
 }
 
 .game-main {
-    margin-top: 20px;
+    margin-top: 10px;
     position: relative;
 }
 
@@ -135,13 +135,23 @@ main {
     transform: translate(10px, -430px);
 }
 
-[data-row="1"][data-cell="2"] {
-    transform: translate(120px, -320px);
+/* [data-row="0"][data-cell="1"] {
+    transform: translate(120px, -430px);
 }
 
-[data-row="1"][data-cell="1"] {
-    transform: translate(121px, 121px);
+[data-row="0"][data-cell="2"] {
+    transform: translate(230px, -430px);
 }
+
+[data-row="0"][data-cell="1"] {
+    transform: translate(120px, -430px);
+}
+
+[data-row="1"][data-cell="2"] {
+    transform: translate(120px, -320px);
+} */
+
+
 
 [data-value="0"] {
     background-color: #FBECF0;
