@@ -2,7 +2,7 @@ export default class View {
     constructor({rows, columns}) {
         this.grid = document.querySelector('.grid');
 
-        for(let i = 0, row, cell; i < rows; i++){
+        for(let i = 0, row, cell, innerCell; i < rows; i++){
             row = document.createElement('div');
             row.classList.add('grid__row', 'row');
             this.grid.appendChild(row);
@@ -11,6 +11,11 @@ export default class View {
                 cell = document.createElement('div');
                 cell.classList.add('row__cell', 'cell');
                 row.appendChild(cell);
+
+                innerCell = document.createElement('div');
+                innerCell.classList.add('cell__inner');
+                cell.appendChild(innerCell);
+
             }
         }
         
