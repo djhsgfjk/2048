@@ -1,5 +1,8 @@
 export default class View {
     constructor({rows, columns}) {
+        this.rows = rows;
+        this.columns = columns;
+
         this.grid = document.querySelector('.grid');
         this.squaresContainer = document.querySelector('.squares-container');
         const sheet  = document.querySelector("style").sheet;
@@ -16,9 +19,13 @@ export default class View {
 
                 innerCell = document.createElement('div');
                 innerCell.classList.add('cell__inner');
+
                 cell.appendChild(innerCell);
 
-                rule = `[data-row="${i}"][data-cell="${j}"] { transform: translate(${j * 110 + 10}px, ${i * 110 - 430}px); }`;
+                rule = `[data-row="${i}"][data-cell="${j}"] {
+                    transform: translate(${j * 110 + 10}px, ${i * 110 - 430}px); 
+                    transition: transform 1s;
+                }`;
                 sheet.insertRule(rule, sheet.cssRules.length);
 
             }
@@ -28,17 +35,26 @@ export default class View {
     }
 
     createSquare(row, cell, value) {
-        let square;
+        let square, squareLabel;
 
         square = document.createElement('div');
-        square.classList.add('cell__square');
-        square.innerHTML = value;
+        square.classList.add('cell__square', 'square');
         square.dataset.row = row;
         square.dataset.cell = cell;
-        square.dataset.value = value;
         square.dataset.merged = false;
 
+        squareLabel = document.createElement('div');
+        squareLabel.classList.add('square__label', 'square__label--new');
+        squareLabel.innerHTML = value;
+        squareLabel.dataset.value = value;
+        squareLabel.addEventListener("animationend", function(event) {
+            event.target.classList.remove('square__label--new');
+        });
+
+
+        square.appendChild(squareLabel);
         this.squaresContainer.appendChild(square);
+        
     }
 
     moveSquaresLeft() {
@@ -51,21 +67,31 @@ export default class View {
         squares.remove();
     }
 
+    moveLeft() {
+        document.querySelectorAll('.cell__square').forEach((s) => {
+            s.dataset.cell = 0;
+        });
+    }
+
     bindMoveLeft(handler) {
         document.addEventListener('keydown', function(event) {
+            event.preventDefault();
             if (event.code == 'ArrowLeft') {
                 handler();
-                document.querySelectorAll('.cell__square').forEach((s) => {
-                    console.log(s); 
-                    s.dataset.cell = 0;
-                });
             }
           });
 
     }
 
+    moveRight() {
+        document.querySelectorAll('.cell__square').forEach((s) => {
+            s.dataset.cell = this.columns - 1;
+        });
+    }
+
     bindMoveRight(handler) {
         document.addEventListener('keydown', function(event) {
+            event.preventDefault();
             if (event.code == 'ArrowRight') {
                 handler();
             }
@@ -73,8 +99,15 @@ export default class View {
         
     }
 
+    moveUp() {
+        document.querySelectorAll('.cell__square').forEach((s) => {
+            s.dataset.row = 0;
+        });
+    }
+
     bindMoveUp(handler) {
         document.addEventListener('keydown', function(event) {
+            event.preventDefault();
             if (event.code == 'ArrowUp') {
                 handler();
             }
@@ -82,8 +115,15 @@ export default class View {
         
     }
 
+    moveDown() {
+        document.querySelectorAll('.cell__square').forEach((s) => {
+            s.dataset.row = this.rows - 1;
+        });
+    }
+
     bindMoveDown(handler) {
         document.addEventListener('keydown', function(event) {
+            event.preventDefault();
             if (event.code == 'ArrowDown') {
                 handler();
             }

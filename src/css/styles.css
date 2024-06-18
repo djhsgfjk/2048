@@ -119,7 +119,7 @@ main {
     animation-name: slideRight;
 }
 
-.cell__square {
+.square__label {
     height: 100px;
     width: 100px;
     background-color: #E6A4B4;
@@ -131,27 +131,23 @@ main {
     border-radius: 6px;
 }
 
-[data-row="0"][data-cell="0"] {
-    transform: translate(10px, -430px);
+@keyframes appear {
+    from {
+        opacity: 0;
+        scale: 0;
+    }
+
+    to {
+        opacity: 1;
+        scale: 1;
+    }
 }
 
-/* [data-row="0"][data-cell="1"] {
-    transform: translate(120px, -430px);
+.square__label--new {
+    animation-duration: 1s;
+    animation-name: appear;
+    animation-fill-mode: forwards;
 }
-
-[data-row="0"][data-cell="2"] {
-    transform: translate(230px, -430px);
-}
-
-[data-row="0"][data-cell="1"] {
-    transform: translate(120px, -430px);
-}
-
-[data-row="1"][data-cell="2"] {
-    transform: translate(120px, -320px);
-} */
-
-
 
 [data-value="0"] {
     background-color: #FBECF0;
