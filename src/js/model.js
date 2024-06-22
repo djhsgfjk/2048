@@ -1,10 +1,11 @@
 export default class Model {
-    constructor({rows, columns}) {
+    constructor({rows, columns, minNumber}) {
         this.rows = rows;
         this.columns = columns;
+        this.minNumber = minNumber;
         this.score = 0;
         
-        this.squares = new Array(rows);
+        this.squares = new Array();
     }
 
     getAnyEmptyPosition() {
@@ -16,18 +17,61 @@ export default class Model {
         return [x, y];
     }
 
-    addSquare(x, y, value) {
-        const newSquare = new Square(x, y, value);
+    addSquare(row, cell, value) {
+        const newSquare = new Square({
+            row: row, 
+            cell: cell, 
+            value:value});
         this.squares.push(newSquare);
+        return newSquare;
     }
 
-    removeMergedSquares(x, y) {
-        this.squares.filter((s) => {
+    deleteMergedSquares() {
+        this.squares = this.squares.filter((s) => {
             return !s.merged;
         });
     }
 
     sumLeft() {
+        this.deleteMergedSquares();
+        for (let i = 0; i < this.rows; i++) {
+            console.log('row = ', i);
+            let a = null, b = null, c = null;
+            const currRow = this.squares.filter((s) => (s.row === i)).sort((s1, s2) => (s1.cell - s2.cell));
+            for (let j = 0; j < currRow.length; j ++) {
+                a = currRow[j];
+                console.log('a before', a.getRow, a.getCell);
+                if (a.isMerged) continue;
+                if (j === 0 && a.getCell !== 0) {
+                    a.editPosition(a.getRow, 0);
+                } else {
+                    a.editPosition(a.getRow, a.getCell);
+                }
+                console.log('a after', a.getRow, a.getCell);
+                if (j + 1 < currRow.length) {
+                    b = currRow[j + 1];
+                    console.log('b before', b.getRow, b.getCell);
+                    if (a.getValue === b.getValue) {
+                        console.log('a.row, a.cell', a.row, a.getCell);
+                        b.editPosition(a.getRow, a.getCell);
+                        a.makeMerged();
+                        b.makeMerged();
+                        console.log('a.value === b.value', a, b);
+                        c = this.addSquare(a.getRow, a.getCell, a.getValue + b.getValue);
+                    } else if (a.getCell + 1 !== b.getCell) {
+                        b.editPosition(a.getRow, a.getCell + 1);
+                    } else {
+                        b.editPosition(b.getRow, b.getCell);
+                    }
+                    console.log('b after', b.getRow, b.getCell);
+                }
+            }
+        }
+
+        const [x, y] = this.getAnyEmptyPosition();
+        this.addSquare(x, y, this.minNumber);
+        console.log(this.squares);
+        console.log('--------------------');
     }
 
     sumRight() {
@@ -50,14 +94,39 @@ class Square{
         this.merged = false;
     }
 
-    editPosition(row, cell) {
+    editPosition(newRow, newCell) {
+        console.log('newRow, newCell', newRow, newCell)
         this.row0 = this.row;
         this.cell0 = this.cell;
-        this.row = row;
-        this.cell = cell;
+        this.row = newRow;
+        this.cell = newCell;
     }
 
-    isMerged() {
+    makeMerged() {
         this.merged = true;
+    }
+
+    get getPrevRow() {
+        return this.row0
+    }
+
+    get getPrevCell() {
+        return this.cell0
+    }
+
+    get getRow() {
+        return this.row
+    }
+
+    get getCell() {
+        return this.cell
+    }
+
+    get getValue() {
+        return this.value
+    }
+
+    get isMerged() {
+        return this.merged
     }
 }

@@ -57,20 +57,34 @@ export default class View {
         
     }
 
-    moveSquaresLeft() {
-        document.querySelectorAll('.cell__square').forEach((s) => (s.dataset.cell = 0));
+    editSquare(row0, cell0, row, cell, value) {
+        let square, squareLabel;
+
+        square = document.querySelector(`[data-row="${row0}"][data-cell="${cell0}"]`);
+        if (square) {
+            square.dataset.row = row;
+            square.dataset.cell = cell;
+
+            squareLabel = square.children[0];
+            squareLabel.innerHTML = value;
+            squareLabel.dataset.value = value;
+        }   
     }
 
-    deleteMergedSquares(row, cell) {
-        let squares = document.querySelectorAll(`div.cell__square[data-merged=${true}]`);
+    mergeSquare(row0, cell0) {
+        console.log('row0, cell0', row0, cell0);
+        const square = document.querySelector(`[data-row="${row0}"][data-cell="${cell0}"]`);
+        console.log('square', square);
+        if (square) square.dataset.merged = true;
 
-        squares.remove();
     }
 
-    moveLeft() {
-        document.querySelectorAll('.cell__square').forEach((s) => {
-            s.dataset.cell = 0;
-        });
+    deleteMergedSquares() {
+        document.querySelectorAll(`.cell__square[data-merged=${true}]`).forEach((e) => (e.remove()));
+    }
+
+    deleteSquare(row0, cell0) {
+        document.querySelector(`[data-row="${row0}"][data-cell="${cell0}"]`).remove();
     }
 
     bindMoveLeft(handler) {
@@ -80,13 +94,6 @@ export default class View {
                 handler();
             }
           });
-
-    }
-
-    moveRight() {
-        document.querySelectorAll('.cell__square').forEach((s) => {
-            s.dataset.cell = this.columns - 1;
-        });
     }
 
     bindMoveRight(handler) {
@@ -96,13 +103,6 @@ export default class View {
                 handler();
             }
           });
-        
-    }
-
-    moveUp() {
-        document.querySelectorAll('.cell__square').forEach((s) => {
-            s.dataset.row = 0;
-        });
     }
 
     bindMoveUp(handler) {
@@ -112,13 +112,6 @@ export default class View {
                 handler();
             }
           });
-        
-    }
-
-    moveDown() {
-        document.querySelectorAll('.cell__square').forEach((s) => {
-            s.dataset.row = this.rows - 1;
-        });
     }
 
     bindMoveDown(handler) {
@@ -128,6 +121,5 @@ export default class View {
                 handler();
             }
           });
-        
     }
 }

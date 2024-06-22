@@ -8,6 +8,7 @@ new Controller({
     model: new Model({
             rows: 4,
             columns: 4,
+            minNumber: 2
         }),
     view: new View({
         rows: 4,
