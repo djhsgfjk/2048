@@ -34,10 +34,11 @@ export default class View {
         
     }
 
-    createSquare(row, cell, value) {
+    createSquare(id, row, cell, value) {
         let square, squareLabel;
 
         square = document.createElement('div');
+        square.id = id;
         square.classList.add('cell__square', 'square');
         square.dataset.row = row;
         square.dataset.cell = cell;
@@ -57,36 +58,34 @@ export default class View {
         
     }
 
-    editSquarePosition(row0, cell0, row, cell) {
+    editSquarePosition(id, row, cell, merged) {
         let square;
 
-        square = document.querySelector(`[data-row="${row0}"][data-cell="${cell0}"]`);
-        console.log('row0, cell0', row0, cell0);
-        console.log('row, cell', row, cell);
+        square = document.getElementById(id);
+        console.log('id, row, cell', id, row, cell);
         console.log(square);
         if (square) {
             square.dataset.row = row;
             square.dataset.cell = cell;
+            if (merged) {
+                square.dataset.merged = true;
+                square.children[0].classList.add('square__label--merged'); 
+            }
         }   
     }
 
-    mergeSquare(row0, cell0) {
-        console.log('row0, cell0', row0, cell0);
-        const square = document.querySelector(`[data-row="${row0}"][data-cell="${cell0}"]`);
+    mergeSquare(id) {
+        console.log('id', id);
+        const square = document.getElementById(id);
         console.log('square', square);
         if (square) {
             square.dataset.merged = true;
-            square.children[0].classList.add('square__label--merged'); 
         }
 
     }
 
     deleteMergedSquares() {
         document.querySelectorAll(`.cell__square[data-merged=${true}]`).forEach((e) => (e.remove()));
-    }
-
-    deleteSquare(row0, cell0) {
-        document.querySelector(`[data-row="${row0}"][data-cell="${cell0}"]`).remove();
     }
 
     bindMoveLeft(handler) {
