@@ -33,6 +33,8 @@ export default class Model {
     }
 
     sumLeft() {
+        
+        console.log('--------------------');
         this.deleteMergedSquares();
         for (let i = 0; i < this.rows; i++) {
             console.log('row = ', i);
@@ -42,10 +44,8 @@ export default class Model {
                 a = currRow[j];
                 console.log('a before', a.getRow, a.getCell);
                 if (a.isMerged) continue;
-                if (j === 0 && a.getCell !== 0) {
-                    a.editPosition(a.getRow, 0);
-                } else {
-                    a.editPosition(a.getRow, a.getCell);
+                if (j === 0) {
+                    a.editPosition(i, 0);
                 }
                 console.log('a after', a.getRow, a.getCell);
                 if (j + 1 < currRow.length) {

@@ -24,7 +24,7 @@ export default class View {
 
                 rule = `[data-row="${i}"][data-cell="${j}"] {
                     transform: translate(${j * 110 + 10}px, ${i * 110 - 430}px); 
-                    transition: transform 1s;
+                    transition: transform 0.6s;
                 }`;
                 sheet.insertRule(rule, sheet.cssRules.length);
 
@@ -57,17 +57,16 @@ export default class View {
         
     }
 
-    editSquare(row0, cell0, row, cell, value) {
-        let square, squareLabel;
+    editSquarePosition(row0, cell0, row, cell) {
+        let square;
 
         square = document.querySelector(`[data-row="${row0}"][data-cell="${cell0}"]`);
+        console.log('row0, cell0', row0, cell0);
+        console.log('row, cell', row, cell);
+        console.log(square);
         if (square) {
             square.dataset.row = row;
             square.dataset.cell = cell;
-
-            squareLabel = square.children[0];
-            squareLabel.innerHTML = value;
-            squareLabel.dataset.value = value;
         }   
     }
 
@@ -75,7 +74,10 @@ export default class View {
         console.log('row0, cell0', row0, cell0);
         const square = document.querySelector(`[data-row="${row0}"][data-cell="${cell0}"]`);
         console.log('square', square);
-        if (square) square.dataset.merged = true;
+        if (square) {
+            square.dataset.merged = true;
+            square.children[0].classList.add('square__label--merged'); 
+        }
 
     }
 
@@ -121,5 +123,6 @@ export default class View {
                 handler();
             }
           });
+        
     }
 }

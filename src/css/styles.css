@@ -58,6 +58,7 @@ main {
 
 .cell__square {
     position: absolute;
+    z-index: 3;
 }
 
 .row {
@@ -94,31 +95,6 @@ main {
     border-color: rgb(244,194,194);
 }
 
-
-@keyframes emergence {
-    from {
-        width: 0px;
-        height: 0px;
-        font-size: 0rem;
-    }
-
-    to {
-        height: 100px;
-        width: 100px;
-        font-size: 2rem;
-    }
-}
-
-.emergence {
-    animation-duration: 0.5s;
-    animation-name: emergence;
-}
-
-.slide-right {
-    animation-duration: 0.5s;
-    animation-name: slideRight;
-}
-
 .square__label {
     height: 100px;
     width: 100px;
@@ -132,7 +108,7 @@ main {
 }
 
 @keyframes appear {
-    from {
+    /* from {
         opacity: 0;
         scale: 0;
     }
@@ -140,12 +116,51 @@ main {
     to {
         opacity: 1;
         scale: 1;
+    } */
+
+    0% {
+        opacity: 0;
+        scale: 0;
+    }
+
+    /* 50% {
+        opacity: 0;
+        scale: 0;
+    } */
+
+    100% {
+        opacity: 1;
+        scale: 1;
     }
 }
 
 .square__label--new {
-    animation-duration: 1s;
+    animation-duration: 0.3s;
     animation-name: appear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes merge {
+    0% {
+        opacity: 1;
+        scale: 1;
+    }
+
+    90% {
+        opacity: 1;
+        scale: 1;
+    }
+
+    100% {
+        opacity: 0;
+        scale: 0;
+    }
+}
+
+.square__label--merged {
+    z-index: 2;
+    animation-duration: 0.3s;
+    animation-name: merge;
     animation-fill-mode: forwards;
 }
 
