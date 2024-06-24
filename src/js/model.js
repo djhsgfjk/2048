@@ -5,8 +5,36 @@ export default class Model {
         this.minNumber = minNumber;
         this.score = 0;
         
-        this.squares = new Array();
+        
+        this._changed = true;
+        this._lastDirection = null; // ['L', 'R', 'U', 'D']
+        this._squares = new Array();
     }
+
+    get changed() {
+        return this._changed;
+    }
+
+    set changed(value) {
+        this._changed = value;
+    }
+
+    get lastDirection() {
+        return this._lastDirection;
+    }
+
+    set lastDirection(value) {
+        this._lastDirection = value;
+    }
+
+    get squares() {
+        return this._squares;
+    }
+
+    set squares(value) {
+        this._squares = value;
+    }
+
 
     getAnyEmptyPosition() {
         let x, y;
@@ -36,6 +64,8 @@ export default class Model {
     sumLeft() {
         console.log('--------------------');
         this.deleteMergedSquares();
+        this.changed = false;
+        this.lastDirection = 'L';
         for (let i = 0; i < this.rows; i++) {
             console.log('row = ', i);
             let a = null, b = null, c = null;
@@ -44,8 +74,9 @@ export default class Model {
                 a = currRow[j];
                 a.isNotNew();
                 console.log('a before', a.id, a.row, a.cell);
-                if (j === 0) {
+                if (j === 0 && a.cell !== 0) {
                     a.editPosition(i, 0);
+                    this.changed = true;
                 }
                 console.log('a after', a.id, a.row, a.cell);
                 if (j + 1 < currRow.length) {
@@ -57,23 +88,24 @@ export default class Model {
                         b.makeMerged();
                         console.log('a.value === b.value',  a.id,  b.id);
                         c = this.addSquare(a.row, a.cell, a.value + b.value);
-                    } else {
+                        this.changed = true;
+                    } else if (b.cell !== a.cell + 1) {
                         b.editPosition(a.row, a.cell + 1);
+                        this.changed = true;
                     } 
                     console.log('b after',  b.id, b.row, b.cell);
                 }
             }
         }
-
-        const [x, y] = this.getAnyEmptyPosition();
-        this.addSquare(x, y, this.minNumber);
-        console.log(this.squares);
+        console.log('changed', this.changed);
         console.log('--------------------');
     }
 
     sumRight() {
         console.log('--------------------');
         this.deleteMergedSquares();
+        this.changed = false;
+        this.lastDirection = 'R';
         for (let i = 0; i < this.rows; i++) {
             console.log('row = ', i);
             let a = null, b = null, c = null;
@@ -82,8 +114,9 @@ export default class Model {
                 a = currRow[j];
                 a.isNotNew();
                 console.log('a before', a.id, a.row, a.cell);
-                if (j === 0) {
+                if (j === 0 && a.cell !== this.columns - 1) {
                     a.editPosition(i, this.columns - 1);
+                    this.changed = true;
                 }
                 console.log('a after', a.id, a.row, a.cell);
                 if (j + 1 < currRow.length) {
@@ -95,23 +128,23 @@ export default class Model {
                         b.makeMerged();
                         console.log('a.value === b.value',  a.id,  b.id);
                         c = this.addSquare(a.row, a.cell, a.value + b.value);
-                    } else {
+                        this.changed = true;
+                    } else if (b.cell !== a.cell - 1) {
                         b.editPosition(a.row, a.cell - 1);
+                        this.changed = true;
                     } 
                     console.log('b after',  b.id, b.row, b.cell);
                 }
             }
         }
-
-        const [x, y] = this.getAnyEmptyPosition();
-        this.addSquare(x, y, this.minNumber);
-        console.log(this.squares);
         console.log('--------------------');
     }
 
     sumUp() {
         console.log('--------------------');
         this.deleteMergedSquares();
+        this.changed = false;
+        this.lastDirection = 'U';
         for (let i = 0; i < this.columns; i++) {
             console.log('column = ', i);
             let a = null, b = null, c = null;
@@ -120,8 +153,9 @@ export default class Model {
                 a = currRow[j];
                 a.isNotNew();
                 console.log('a before', a.id, a.row, a.cell);
-                if (j === 0) {
+                if (j === 0 && a.row !== 0) {
                     a.editPosition(0, i);
+                    this.changed = true;
                 }
                 console.log('a after', a.id, a.row, a.cell);
                 if (j + 1 < currRow.length) {
@@ -133,23 +167,23 @@ export default class Model {
                         b.makeMerged();
                         console.log('a.value === b.value',  a.id,  b.id);
                         c = this.addSquare(a.row, a.cell, a.value + b.value);
-                    } else {
+                        this.changed = true;
+                    } else if (b.row !== a.row + 1) {
                         b.editPosition(a.row + 1, a.cell);
+                        this.changed = true;
                     } 
                     console.log('b after',  b.id, b.row, b.cell);
                 }
             }
         }
-
-        const [x, y] = this.getAnyEmptyPosition();
-        this.addSquare(x, y, this.minNumber);
-        console.log(this.squares);
         console.log('--------------------');
     }
 
     sumDown() {
         console.log('--------------------');
         this.deleteMergedSquares();
+        this.changed = false;
+        this.lastDirection = 'D';
         for (let i = 0; i < this.columns; i++) {
             console.log('column = ', i);
             let a = null, b = null, c = null;
@@ -158,8 +192,9 @@ export default class Model {
                 a = currRow[j];
                 a.isNotNew();
                 console.log('a before', a.id, a.row, a.cell);
-                if (j === 0) {
+                if (j === 0 && a.row !== this.rows - 1) {
                     a.editPosition(this.rows - 1, i);
+                    this.changed = true;
                 }
                 console.log('a after', a.id, a.row, a.cell);
                 if (j + 1 < currRow.length) {
@@ -171,17 +206,15 @@ export default class Model {
                         b.makeMerged();
                         console.log('a.value === b.value',  a.id,  b.id);
                         c = this.addSquare(a.row, a.cell, a.value + b.value);
-                    } else {
+                        this.changed = true;
+                    } else if (b.row !== a.row - 1) {
                         b.editPosition(a.row - 1, a.cell);
+                        this.changed = true;
                     } 
                     console.log('b after',  b.id, b.row, b.cell);
                 }
             }
         }
-
-        const [x, y] = this.getAnyEmptyPosition();
-        this.addSquare(x, y, this.minNumber);
-        console.log(this.squares);
         console.log('--------------------');
     }
 }

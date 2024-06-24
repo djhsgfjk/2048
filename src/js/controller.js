@@ -10,23 +10,42 @@ export default class Controller {
         this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
         
         this.view.bindMoveLeft(() => {
-            this.model.sumLeft();
-            this.applyСhanges();
-            
+            if (this.model.changed || this.model.lastDirection !== 'L') {
+                this.model.sumLeft();
+            }
+            if (this.model.changed) {
+                this.model.addSquare(...this.model.getAnyEmptyPosition(), this.model.minNumber);
+                this.applyСhanges();
+            }
         });
 
         this.view.bindMoveRight(() => {
-            this.model.sumRight();
-            this.applyСhanges();
+            if (this.model.changed || this.model.lastDirection !== 'R') {
+                this.model.sumRight();
+            }
+            if (this.model.changed) {
+                this.model.addSquare(...this.model.getAnyEmptyPosition(), this.model.minNumber);
+                this.applyСhanges();
+            }
         });
 
         this.view.bindMoveUp(() => {
-            this.model.sumUp();
-            this.applyСhanges();
+            if (this.model.changed || this.model.lastDirection !== 'U') {
+                this.model.sumUp();
+            }
+            if (this.model.changed) {
+                this.model.addSquare(...this.model.getAnyEmptyPosition(), this.model.minNumber);
+                this.applyСhanges();
+            }
         });
         this.view.bindMoveDown(() => {
-            this.model.sumDown();
-            this.applyСhanges();
+            if (this.model.changed || this.model.lastDirection !== 'D') {
+                this.model.sumDown();
+            }
+            if (this.model.changed) {
+                this.model.addSquare(...this.model.getAnyEmptyPosition(), this.model.minNumber);
+                this.applyСhanges();
+            }
         });
     }
 
