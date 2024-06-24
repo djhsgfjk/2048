@@ -72,6 +72,41 @@ export default class Model {
     }
 
     sumRight() {
+        console.log('--------------------');
+        this.deleteMergedSquares();
+        for (let i = 0; i < this.rows; i++) {
+            console.log('row = ', i);
+            let a = null, b = null, c = null;
+            const currRow = this.squares.filter((s) => (s.row === i)).sort((s1, s2) => (s2.cell - s1.cell));
+            for (let j = 0; j < currRow.length; j++) {
+                a = currRow[j];
+                a.isNotNew();
+                console.log('a before', a.id, a.row, a.cell);
+                if (j === 0) {
+                    a.editPosition(i, this.columns - 1);
+                }
+                console.log('a after', a.id, a.row, a.cell);
+                if (j + 1 < currRow.length) {
+                    b = currRow[j + 1];
+                    console.log('b before', b.id, b.row, b.cell);
+                    if (!a.merged && !b.merged && a.value === b.value) {
+                        b.editPosition(a.row, a.cell);
+                        a.makeMerged();
+                        b.makeMerged();
+                        console.log('a.value === b.value',  a.id,  b.id);
+                        c = this.addSquare(a.row, a.cell, a.value + b.value);
+                    } else {
+                        b.editPosition(a.row, a.cell - 1);
+                    } 
+                    console.log('b after',  b.id, b.row, b.cell);
+                }
+            }
+        }
+
+        const [x, y] = this.getAnyEmptyPosition();
+        this.addSquare(x, y, this.minNumber);
+        console.log(this.squares);
+        console.log('--------------------');
     }
 
     sumUp() {
