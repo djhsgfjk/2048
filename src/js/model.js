@@ -1,38 +1,63 @@
 export default class Model {
+    #score;
+    #scoreDiff;
+    #changed;
+    #lastDirection;
+    #squares;
+    rows;
+    columns;
+    minNumber;
+
     constructor({rows, columns, minNumber}) {
         this.rows = rows;
         this.columns = columns;
         this.minNumber = minNumber;
+
         this.score = 0;
-        
-        
-        this._changed = true;
-        this._lastDirection = null; // ['L', 'R', 'U', 'D']
-        this._squares = new Array();
+        this.scoreDiff = 0;
+        this.changed = true;
+        this.lastDirection = null; // ['L', 'R', 'U', 'D']
+        this.squares = new Array();
     }
 
     get changed() {
-        return this._changed;
+        return this.#changed;
     }
 
     set changed(value) {
-        this._changed = value;
+        this.#changed = value;
     }
 
     get lastDirection() {
-        return this._lastDirection;
+        return this.#lastDirection;
     }
 
     set lastDirection(value) {
-        this._lastDirection = value;
+        this.#lastDirection = value;
     }
 
     get squares() {
-        return this._squares;
+        return this.#squares;
     }
 
     set squares(value) {
-        this._squares = value;
+        this.#squares = value;
+    }
+
+    get score() {
+        return this.#score;
+    }
+
+    set score(score) {
+        this.#score = score;
+    }
+
+    get scoreDiff() {
+        return this.#scoreDiff;
+    }
+
+    set scoreDiff(value) {
+        this.#scoreDiff = value;
     }
 
 
@@ -53,7 +78,8 @@ export default class Model {
             value: value});
         this.squares.push(newSquare);
         if (value > this.minNumber) {
-            this.score += value
+            this.score = this.score + value;
+            this.scoreDiff = value;
         }
         
         return newSquare;
@@ -223,52 +249,59 @@ export default class Model {
 }
 
 class Square{
+    #id;
+    #row;
+    #cell;
+    #value;
+    #merged;
+    #new;
+
     constructor({row, cell, value}) {
-        this._id = Math.random().toString(16).slice(2);
-        this._row = row;
-        this._cell = cell;
-        this._value = value;
-        this._merged = false;
-        this._new = true;
+        this.#id = Math.random().toString(16).slice(2);
+        this.#row = row;
+        this.#cell = cell;
+        this.#value = value;
+        this.#merged = false;
+        this.#new = true;
     }
 
     editPosition(newRow, newCell) {
         console.log('newRow, newCell', newRow, newCell)
-        this._row = newRow;
-        this._cell = newCell;
-        this._new = false;
+        this.#row = newRow;
+        this.#cell = newCell;
+        this.#new = false;
     }
 
     makeMerged() {
-        this._merged = true;
-        this._new = false;
+        this.#merged = true;
+        this.#new = false;
     }
 
     isNotNew() {
-        this._new = false;
+        this.#new = false;
     }
 
     get id() {
-        return this._id
+        return this.#id
     }
 
     get row() {
-        return this._row
+        return this.#row
     }
 
     get cell() {
-        return this._cell
+        return this.#cell
     }
 
     get value() {
-        return this._value
+        return this.#value
     }
 
     get merged() {
-        return this._merged
+        return this.#merged
     }
 
     get new() {
-        return this._new
+        return this.#new
     }
  }
