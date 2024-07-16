@@ -62,7 +62,7 @@ export default class Controller {
                 this.view.createSquare(s.id, s.row, s.cell, s.value);
             });
 
-            this.view.changeScore(this.model.score);
+            if (this.model.scoreDiff > 0) this.view.changeScore(this.model.score, this.model.scoreDiff);
         }, 100);
 
         setTimeout(() => {

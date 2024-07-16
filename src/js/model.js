@@ -79,7 +79,7 @@ export default class Model {
         this.squares.push(newSquare);
         if (value > this.minNumber) {
             this.score = this.score + value;
-            this.scoreDiff = value;
+            this.scoreDiff = this.scoreDiff + value;
         }
         
         return newSquare;
@@ -94,6 +94,7 @@ export default class Model {
         console.log('--------------------');
         this.deleteMergedSquares();
         this.changed = false;
+        this.scoreDiff = 0;
         this.lastDirection = 'L';
         for (let i = 0; i < this.rows; i++) {
             console.log('row = ', i);
@@ -134,6 +135,7 @@ export default class Model {
         console.log('--------------------');
         this.deleteMergedSquares();
         this.changed = false;
+        this.scoreDiff = 0;
         this.lastDirection = 'R';
         for (let i = 0; i < this.rows; i++) {
             console.log('row = ', i);
@@ -173,6 +175,7 @@ export default class Model {
         console.log('--------------------');
         this.deleteMergedSquares();
         this.changed = false;
+        this.scoreDiff = 0;
         this.lastDirection = 'U';
         for (let i = 0; i < this.columns; i++) {
             console.log('column = ', i);
@@ -212,6 +215,7 @@ export default class Model {
         console.log('--------------------');
         this.deleteMergedSquares();
         this.changed = false;
+        this.scoreDiff = 0;
         this.lastDirection = 'D';
         for (let i = 0; i < this.columns; i++) {
             console.log('column = ', i);
