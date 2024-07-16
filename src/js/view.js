@@ -88,6 +88,11 @@ export default class View {
         document.querySelectorAll(`.cell__square[data-merged=${true}]`).forEach((e) => (e.remove()));
     }
 
+    changeScore(newScore) {
+        const scoreElem = document.querySelector('.score__value');
+        scoreElem.innerHTML = newScore;
+    }
+
     bindMoveLeft(handler) {
         document.addEventListener('keydown', function(event) {
             event.preventDefault();

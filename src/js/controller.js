@@ -3,10 +3,10 @@ export default class Controller {
         this.model = model;
         this.view = view;
         
-        let [x, y] = [2,1]//this.model.getAnyEmptyPosition();
+        let [x, y] = this.model.getAnyEmptyPosition();
         this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
 
-        [x, y] = [2,3]//this.model.getAnyEmptyPosition();
+        [x, y] = this.model.getAnyEmptyPosition();
         this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
         
         this.view.bindMoveLeft(() => {
@@ -61,6 +61,8 @@ export default class Controller {
             this.model.squares.filter((s) => (s.new && s.value > this.model.minNumber)).forEach((s) => {
                 this.view.createSquare(s.id, s.row, s.cell, s.value);
             });
+
+            this.view.changeScore(this.model.score);
         }, 100);
 
         setTimeout(() => {

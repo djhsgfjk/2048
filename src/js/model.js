@@ -50,11 +50,14 @@ export default class Model {
         const newSquare = new Square({
             row: row, 
             cell: cell, 
-            value:value});
+            value: value});
         this.squares.push(newSquare);
+        if (value > this.minNumber) {
+            this.score += value
+        }
+        
         return newSquare;
     }
-
     deleteMergedSquares() {
         this.squares = this.squares.filter((s) => {
             return !s.merged;
