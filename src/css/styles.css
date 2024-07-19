@@ -158,12 +158,12 @@ main {
 @keyframes showValueDiff {
     0% {
         opacity: 1;
-        transform: translate(0, -40px);
+        bottom: 2em;
     }
 
     100% {
         opacity: 0;
-        transform: translate(0, -60px);
+        bottom: 3em;
     }
 }
 
@@ -176,14 +176,15 @@ main {
     z-index: 2;
     animation-duration: 1s;
     animation-name: showValueDiff;
+    animation-fill-mode: forwards;
 }
 
 .score-value__diff {
     opacity: 0;
     position: relative;
-    transform: translate(0, -40px);
     font-size: 0.8em;
-    margin-left: 100%;
+    left: 100%;
+    bottom: 2em;
 }
 
 [data-value="0"] {
