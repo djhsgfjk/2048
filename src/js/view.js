@@ -32,28 +32,31 @@ export default class View {
         }
     }
 
-    createSquare(id, row, cell, value) {
+    createSquare(id, row, cell, value, paretIds) {
         let square, squareLabel;
 
-        square = document.createElement('div');
-        square.id = id;
-        square.classList.add('cell__square', 'square');
-        square.dataset.row = row;
-        square.dataset.cell = cell;
-        square.dataset.merged = false;
+        square = document.getElementById(id);
+        if (!square) {
 
-        squareLabel = document.createElement('div');
-        squareLabel.classList.add('square__label', 'square__label--new');
-        squareLabel.innerHTML = value;
-        squareLabel.dataset.value = value;
-        squareLabel.addEventListener("animationend", function(event) {
-            event.target.classList.remove('square__label--new');
-        });
+            square = document.createElement('div');
+            square.id = id;
+            square.classList.add('cell__square', 'square');
+            square.dataset.row = row;
+            square.dataset.cell = cell;
+            square.dataset.merged = false;
+
+            squareLabel = document.createElement('div');
+            squareLabel.classList.add('square__label', 'square__label--new');
+            squareLabel.innerHTML = value;
+            squareLabel.dataset.value = value;
+            squareLabel.addEventListener("animationend", function(event) {
+                event.target.classList.remove('square__label--new');
+            });
 
 
-        square.appendChild(squareLabel);
-        this.squaresContainer.appendChild(square);
-        
+            square.appendChild(squareLabel);
+            this.squaresContainer.appendChild(square);
+        }
     }
 
     editSquarePosition(id, row, cell, merged) {
@@ -70,7 +73,7 @@ export default class View {
                 square.dataset.merged = true;
                 square.children[0].classList.add('square__label--merged'); 
             }
-        }   
+        }
     }
 
     mergeSquare(id) {

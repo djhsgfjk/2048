@@ -57,19 +57,16 @@ export default class Controller {
             this.view.editSquarePosition(s.id, s.row, s.cell, s.merged);
         });
 
-        setTimeout(() => {
-            this.model.squares.filter((s) => (s.new && s.value > this.model.minNumber)).forEach((s) => {
-                this.view.createSquare(s.id, s.row, s.cell, s.value);
-            });
+        this.model.squares.filter((s) => (s.new && s.value > this.model.minNumber)).forEach((s) => {
+            this.view.createSquare(s.id, s.row, s.cell, s.value);
+        });
 
-            if (this.model.scoreDiff > 0) this.view.changeScore(this.model.score, this.model.scoreDiff);
-        }, 100);
+        if (this.model.scoreDiff > 0) this.view.changeScore(this.model.score, this.model.scoreDiff);
 
-        setTimeout(() => {
-            this.model.squares.filter((s) => (s.new && s.value === this.model.minNumber)).forEach((s) => {
-                this.view.createSquare(s.id, s.row, s.cell, s.value);
-            });
-        }, 200);
+        this.model.squares.filter((s) => (s.new && s.value === this.model.minNumber)).forEach((s) => {
+            this.view.createSquare(s.id, s.row, s.cell, s.value);
+        });
         
+        console.log('test', this.model.squares)
     }
 }
