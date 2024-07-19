@@ -30,9 +30,6 @@ export default class View {
 
             }
         }
-
-        const scoreDiffElem = document.querySelector('.score-value__diff')
-        scoreDiffElem.addEventListener('animationend', () => {scoreDiffElem.classList.remove("score-value__diff--showing")});
     }
 
     createSquare(id, row, cell, value) {
@@ -66,6 +63,7 @@ export default class View {
         console.log('id, row, cell', id, row, cell);
         console.log(square);
         if (square) {
+            square.getAnimations().forEach((animation) => animation.finish());
             square.dataset.row = row;
             square.dataset.cell = cell;
             if (merged) {
@@ -94,6 +92,11 @@ export default class View {
         scoreElem.innerHTML = newScore;
 
         const scoreDiffElem = document.querySelector('.score-value__diff');
+
+        scoreDiffElem.classList.remove("score-value__diff--showing");
+        scoreDiffElem.getAnimations().forEach((animation) => animation.finish());
+        
+
         scoreDiffElem.innerHTML = "+" + scoreDiff;
         scoreDiffElem.classList.add("score-value__diff--showing");
     }
