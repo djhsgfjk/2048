@@ -89,6 +89,10 @@ export default class View {
         document.querySelectorAll(`.cell__square[data-merged=${true}]`).forEach((e) => (e.remove()));
     }
 
+    finishAnimations() {
+        document.getAnimations().forEach((animation) => animation.finish());
+    }
+
     changeScore(newScore, scoreDiff) {
         const scoreElem = document.querySelector('.score-value__value');
         scoreElem.innerHTML = newScore;
@@ -96,6 +100,15 @@ export default class View {
         const scoreDiffElem = document.querySelector('.score-value__diff');
         scoreDiffElem.innerHTML = "+" + scoreDiff;
         scoreDiffElem.classList.add("score-value__diff--showing");
+    }
+
+    bindCreateSquare(parentId, id, row, cell, value) {
+        const parent = document.getElementById(parentId);
+        console.log('test parent', parent);
+        parent.addEventListener('animationend', () => {
+            console.log('test create new animationend');
+            this.createSquare(id, row, cell, value);
+        });
     }
 
     bindMoveLeft(handler) {

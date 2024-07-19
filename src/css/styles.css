@@ -176,6 +176,7 @@ main {
     z-index: 2;
     animation-duration: 1s;
     animation-name: showValueDiff;
+    animation-fill-mode: forwards;
 }
 
 .score-value__diff {
