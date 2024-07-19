@@ -108,19 +108,24 @@ main {
 }
 
 @keyframes appear {
-    from {
+    0% {
         opacity: 0;
         scale: 0;
     }
 
-    to {
+    50% {
+        opacity: 0;
+        scale: 0;
+    }
+
+    100% {
         opacity: 1;
         scale: 1;
     }
 }
 
 .square__label--new {
-    animation-duration: 0.3s;
+    animation-duration: 0.6s;
     animation-name: appear;
     animation-fill-mode: forwards;
 }
@@ -131,7 +136,7 @@ main {
         scale: 1;
     }
 
-    90% {
+    50% {
         opacity: 1;
         scale: 1;
     }
@@ -144,7 +149,7 @@ main {
 
 .square__label--merged {
     z-index: 2;
-    animation-duration: 0.3s;
+    animation-duration: 0.6s;
     animation-name: merge;
     animation-fill-mode: forwards;
 }
