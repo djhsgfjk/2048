@@ -30,9 +30,6 @@ export default class View {
 
             }
         }
-
-        const scoreDiffElem = document.querySelector('.score-value__diff')
-        scoreDiffElem.addEventListener('animationend', () => {scoreDiffElem.classList.remove("score-value__diff--showing")});
     }
 
     createSquare(id, row, cell, value) {
@@ -66,6 +63,7 @@ export default class View {
         console.log('id, row, cell', id, row, cell);
         console.log(square);
         if (square) {
+            square.getAnimations().forEach((animation) => animation.finish());
             square.dataset.row = row;
             square.dataset.cell = cell;
             if (merged) {
@@ -89,26 +87,18 @@ export default class View {
         document.querySelectorAll(`.cell__square[data-merged=${true}]`).forEach((e) => (e.remove()));
     }
 
-    finishAnimations() {
-        document.getAnimations().forEach((animation) => animation.finish());
-    }
-
     changeScore(newScore, scoreDiff) {
         const scoreElem = document.querySelector('.score-value__value');
         scoreElem.innerHTML = newScore;
 
         const scoreDiffElem = document.querySelector('.score-value__diff');
+
+        scoreDiffElem.classList.remove("score-value__diff--showing");
+        scoreDiffElem.getAnimations().forEach((animation) => animation.finish());
+        
+
         scoreDiffElem.innerHTML = "+" + scoreDiff;
         scoreDiffElem.classList.add("score-value__diff--showing");
-    }
-
-    bindCreateSquare(parentId, id, row, cell, value) {
-        const parent = document.getElementById(parentId);
-        console.log('test parent', parent);
-        parent.addEventListener('animationend', () => {
-            console.log('test create new animationend');
-            this.createSquare(id, row, cell, value);
-        });
     }
 
     bindMoveLeft(handler) {
