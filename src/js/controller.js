@@ -2,14 +2,20 @@ export default class Controller {
     constructor({model, view}) {
         this.model = model;
         this.view = view;
-        
-        let [x, y] = this.model.getAnyEmptyPosition();
-        this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
 
-        [x, y] = this.model.getAnyEmptyPosition();
-        this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
+        if (this.model.squares.length) {
+            this.view.setSquares(this.model.squares);
+            this.view.setScore(this.model.score);
+            this.view.setBestScore(this.model.bestScore);
+        } else {
+            let [x, y] = this.model.getAnyEmptyPosition();
+            this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
 
-        this.view.setBestScore(this.model.bestScore)
+            [x, y] = this.model.getAnyEmptyPosition();
+            this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
+
+            this.view.setBestScore(this.model.bestScore);
+        }
         
         this.view.bindMoveLeft(() => {
             if (this.model.changed || this.model.lastDirection !== 'L') {
@@ -54,13 +60,18 @@ export default class Controller {
         this.view.bindReset(() => {
             this.model.reset();
             this.view.deleteAllSquares();
-            this.view.resetScore()
+            this.view.resetScore();
 
+            localStorage.setItem("score", 0);
+            localStorage.setItem("squares", null);
+            
             let [x, y] = this.model.getAnyEmptyPosition();
             this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
 
             [x, y] = this.model.getAnyEmptyPosition();
             this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
+
+            
         })
     }
 
@@ -86,6 +97,8 @@ export default class Controller {
             this.view.setBestScore(this.model.bestScore);
             localStorage.setItem("bestScore", this.model.bestScore);
         }
-        console.log('test', this.model.squares)
+
+        localStorage.setItem("score", this.model.score);
+        localStorage.setItem("squares", this.model.toString());
     }
 }

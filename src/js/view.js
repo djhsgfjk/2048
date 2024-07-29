@@ -32,7 +32,32 @@ export default class View {
         }
     }
 
-    createSquare(id, row, cell, value, paretIds) {
+    setSquares(squares) {
+        console.log('squares', squares);
+        squares.forEach((s) => {
+            let square, squareLabel;
+            
+            square = document.getElementById(s.id);
+            if (!square) {
+                square = document.createElement('div');
+                square.id = s.id;
+                square.classList.add('cell__square', 'square');
+                square.dataset.row = s.row;
+                square.dataset.cell = s.cell;
+                square.dataset.merged = s.merged;
+
+                const squareLabel = document.createElement('div');
+                squareLabel.classList.add('square__label');
+                squareLabel.innerHTML = s.value;
+                squareLabel.dataset.value = s.value;
+
+                square.appendChild(squareLabel);
+                this.squaresContainer.appendChild(square);
+            }
+        })
+    }
+
+    createSquare(id, row, cell, value) {
         let square, squareLabel;
 
         square = document.getElementById(id);
@@ -84,6 +109,11 @@ export default class View {
             square.dataset.merged = true;
         }
 
+    }
+
+    setScore(value) {
+        const scoreElem = document.querySelector('.score-value__value');
+        scoreElem.innerHTML = value;
     }
 
     setBestScore(value) {

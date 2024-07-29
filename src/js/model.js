@@ -9,17 +9,23 @@ export default class Model {
     columns;
     minNumber;
 
-    constructor({rows, columns, minNumber, bestScore}) {
-        this.rows = rows;
-        this.columns = columns;
-        this.minNumber = minNumber;
+    constructor(data) {
+        this.rows = data.rows;
+        this.columns = data.columns;
+        this.minNumber = data.minNumber;
 
-        this.score = 0;
+        this.score = data.score ? data.score : 0;
         this.scoreDiff = 0;
-        this.bestScore = bestScore ? bestScore : 0;
+        this.bestScore = data.bestScore ? data.bestScore : 0;
         this.changed = true;
         this.lastDirection = null; // ['L', 'R', 'U', 'D']
-        this.squares = new Array();
+        this.squares = data.squares ? data.squares.map((s) => (new Square({
+            row :s.row, 
+            cell: s.cell, 
+            value: s.value,
+            merged: s.merged,
+            new: s.new,
+        }))) : new Array();
     }
 
     get changed() {
@@ -68,6 +74,21 @@ export default class Model {
 
     set scoreDiff(value) {
         this.#scoreDiff = value;
+    }
+
+    toString() {
+        return JSON.stringify(
+            this.#squares.map((s) => (
+                {
+                    id: s.id,
+                    row: s.row,
+                    cell: s.cell,
+                    value: s.value,
+                    merged: s.merged,
+                    new: s.new,
+                }
+            ))
+        );
     }
 
     reset() {
@@ -149,6 +170,8 @@ export default class Model {
         if (this.score > this.bestScore) {
             this.bestScore = this.score;
         }
+
+        console.log('test this.bestScore = this.score;', this.bestScore, this.score)
         console.log('changed', this.changed);
         console.log('--------------------');
     }
@@ -294,13 +317,13 @@ class Square{
     #merged;
     #new;
 
-    constructor({row, cell, value}) {
-        this.#id = Math.random().toString(16).slice(2);
-        this.#row = row;
-        this.#cell = cell;
-        this.#value = value;
-        this.#merged = false;
-        this.#new = true;
+    constructor(data) {
+        this.#id = data.id ? data.id : Math.random().toString(16).slice(2);
+        this.#row = data.row;
+        this.#cell = data.cell;
+        this.#value = data.value;
+        this.#merged = data.merged ? data.merged : false;
+        this.#new = data.new ? data.new : true;
     }
 
     editPosition(newRow, newCell) {
