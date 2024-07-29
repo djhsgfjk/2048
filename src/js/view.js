@@ -86,6 +86,11 @@ export default class View {
 
     }
 
+    setBestScore(value) {
+        const scoreElem = document.querySelector('.score-value__value--best');
+        scoreElem.innerHTML = value;
+    }
+
     resetScore() {
         const scoreElem = document.querySelector('.score-value__value');
         scoreElem.innerHTML = 0;

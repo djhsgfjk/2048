@@ -1,6 +1,7 @@
 export default class Model {
     #score;
     #scoreDiff;
+    #bestScore;
     #changed;
     #lastDirection;
     #squares;
@@ -8,13 +9,14 @@ export default class Model {
     columns;
     minNumber;
 
-    constructor({rows, columns, minNumber}) {
+    constructor({rows, columns, minNumber, bestScore}) {
         this.rows = rows;
         this.columns = columns;
         this.minNumber = minNumber;
 
         this.score = 0;
         this.scoreDiff = 0;
+        this.bestScore = bestScore ? bestScore : 0;
         this.changed = true;
         this.lastDirection = null; // ['L', 'R', 'U', 'D']
         this.squares = new Array();
@@ -42,6 +44,14 @@ export default class Model {
 
     set squares(value) {
         this.#squares = value;
+    }
+
+    get bestScore() {
+        return this.#bestScore;
+    }
+
+    set bestScore(bestScore) {
+        this.#bestScore = bestScore;
     }
 
     get score() {

@@ -8,6 +8,8 @@ export default class Controller {
 
         [x, y] = this.model.getAnyEmptyPosition();
         this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
+
+        this.view.setBestScore(this.model.bestScore)
         
         this.view.bindMoveLeft(() => {
             if (this.model.changed || this.model.lastDirection !== 'L') {
