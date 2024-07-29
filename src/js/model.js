@@ -60,6 +60,14 @@ export default class Model {
         this.#scoreDiff = value;
     }
 
+    reset() {
+        this.score = 0;
+        this.scoreDiff = 0;
+        this.changed = true;
+        this.lastDirection = null; // ['L', 'R', 'U', 'D']
+        this.squares = [];
+    }
+
 
     getAnyEmptyPosition() {
         let x, y;

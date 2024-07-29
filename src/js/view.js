@@ -86,8 +86,17 @@ export default class View {
 
     }
 
+    resetScore() {
+        const scoreElem = document.querySelector('.score-value__value');
+        scoreElem.innerHTML = 0;
+    }
+
     deleteMergedSquares() {
         document.querySelectorAll(`.cell__square[data-merged=${true}]`).forEach((e) => (e.remove()));
+    }
+
+    deleteAllSquares() {
+        document.querySelectorAll(`.cell__square`).forEach((e) => (e.remove()));
     }
 
     changeScore(newScore, scoreDiff) {
@@ -139,5 +148,13 @@ export default class View {
             }
           });
         
+    }
+
+    bindReset(handler) {
+        const btn = document.querySelector('.new-game-button');
+        console.log(btn)
+        if (btn) btn.addEventListener("click", (event) => {
+            handler();
+          });
     }
 }

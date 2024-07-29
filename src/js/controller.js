@@ -38,6 +38,7 @@ export default class Controller {
                 this.applyСhanges();
             }
         });
+
         this.view.bindMoveDown(() => {
             if (this.model.changed || this.model.lastDirection !== 'D') {
                 this.model.sumDown();
@@ -47,6 +48,18 @@ export default class Controller {
                 this.applyСhanges();
             }
         });
+
+        this.view.bindReset(() => {
+            this.model.reset();
+            this.view.deleteAllSquares();
+            this.view.resetScore()
+
+            let [x, y] = this.model.getAnyEmptyPosition();
+            this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
+
+            [x, y] = this.model.getAnyEmptyPosition();
+            this.view.createSquare(this.model.addSquare(x, y, this.model.minNumber).id, x, y, this.model.minNumber);
+        })
     }
 
     applyСhanges() {
