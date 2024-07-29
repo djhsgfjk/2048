@@ -197,6 +197,10 @@ main {
     margin-left: -0.4em;
 }
 
+.scor__value--best {
+    margin: 0;
+}
+
 @keyframes showValueDiff {
     0% {
         opacity: 1;
