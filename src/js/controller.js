@@ -62,7 +62,7 @@ export default class Controller {
         })
     }
 
-    applyСhanges() {
+    applyСhanges() {            
         this.view.deleteMergedSquares();
 
         this.model.squares.filter((s) => (!s.new))

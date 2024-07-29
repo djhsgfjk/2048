@@ -55,7 +55,7 @@ main {
 }
 
 .button {
-    margin: 0;
+    all: unset;
     padding: 0.4em;
     background:rgb(244,194,194);
     border: none;
@@ -63,11 +63,17 @@ main {
     color: white;
     width: 100%;
     font-size: 1.2em;
+    text-align: center;
 }
 
 .button:hover {
     background: rgb(219,138,138);
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.button:active {
+    border: none;
 }
 
 .game-main {
