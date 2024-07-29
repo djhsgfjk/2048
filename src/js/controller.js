@@ -81,7 +81,11 @@ export default class Controller {
         this.model.squares.filter((s) => (s.new && s.value === this.model.minNumber)).forEach((s) => {
             this.view.createSquare(s.id, s.row, s.cell, s.value);
         });
-        
+
+        if (this.model.score === this.model.bestScore) {
+            this.view.setBestScore(this.model.bestScore);
+            localStorage.setItem("bestScore", this.model.bestScore);
+        }
         console.log('test', this.model.squares)
     }
 }

@@ -145,6 +145,10 @@ export default class Model {
                 }
             }
         }
+
+        if (this.score > this.bestScore) {
+            this.bestScore = this.score;
+        }
         console.log('changed', this.changed);
         console.log('--------------------');
     }
@@ -186,6 +190,10 @@ export default class Model {
                 }
             }
         }
+
+        if (this.score > this.bestScore) {
+            this.bestScore = this.score;
+        }
         console.log('--------------------');
     }
 
@@ -226,6 +234,10 @@ export default class Model {
                 }
             }
         }
+
+        if (this.score > this.bestScore) {
+            this.bestScore = this.score;
+        }
         console.log('--------------------');
     }
 
@@ -265,6 +277,10 @@ export default class Model {
                     console.log('b after',  b.id, b.row, b.cell);
                 }
             }
+        }
+
+        if (this.score > this.bestScore) {
+            this.bestScore = this.score;
         }
         console.log('--------------------');
     }
